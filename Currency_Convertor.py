@@ -25,5 +25,3 @@ def currency():
 
     except requests.exceptions.RequestException as e:
         print("Request not found",e)
-
-currency()
