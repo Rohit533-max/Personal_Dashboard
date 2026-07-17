@@ -13,11 +13,12 @@ def check_weather(city):
         r = requests.get(url,params=p)
         r.raise_for_status()
         data = r.json()
-        print(f"{city}: {data['main']['temp']}°C {data['weather'][0]['description']}")
+        return {
+            'city':city,
+            'temp':data['main']['temp'],
+            'description':data['weather'][0]['description']
+        }
         
-
-
     except requests.exceptions.RequestException as e:
-        print(e)
+        return {"error": str(e)}
 
-check_weather("hamirpur")

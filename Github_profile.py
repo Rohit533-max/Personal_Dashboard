@@ -5,21 +5,24 @@ def get_github_user(username):
 
     try:
         r = requests.get(url)
+        if r.status_code == 404:
+           return {f"User Not Found"}
         r.raise_for_status()
-        user = r.json()
-        print("\n===== GitHub User Profile =====")
-        print(f"Name           : {user.get('name')}")
-        print(f"Username       : {user.get('login')}")
-        print(f"Bio            : {user.get('bio')}")
-        print(f"Company        : {user.get('company')}")
-        print(f"Location       : {user.get('location')}")
-        print(f"Public Repos   : {user.get('public_repos')}")
-        print(f"Followers      : {user.get('followers')}")
-        print(f"Following      : {user.get('following')}")
-        print(f"Created At     : {user.get('created_at')}")
-        print(f"Profile URL    : {user.get('html_url')}")
-        print(f"Avatar URL     : {user.get('avatar_url')}")
-        print("===============================\n")
+        if r.status_code == 200:
+            user = r.json()
+            return {
+            "\n===== GitHub User Profile ====="
+            "Name"           : user.get('name'),
+            "Username"      : user.get('login'),
+            "Bio"            : user.get('bio'),
+            "Company"        : user.get('company'),
+            "Location"       : user.get('location'),
+            "Public Repos"   : user.get('public_repos'),
+            "Followers"      : user.get('followers'),
+            "Following"      : user.get('following'),
+            "Created At"     : user.get('created_at'),
+            "Profile URL"    : user.get('html_url'),
+            "Avatar URL"     : user.get('avatar_url')
+        }
     except requests.exceptions.RequestException as e:
-        print("Error",e)
-get_github_user("cz")
+        return f"Error,str(e)"
